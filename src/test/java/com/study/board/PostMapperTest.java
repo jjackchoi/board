@@ -1,5 +1,8 @@
 package com.study.board;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.study.board.post.PostMapper;
 import com.study.board.post.PostRequest;
 import com.study.board.post.PostResponse;
@@ -25,5 +28,16 @@ public class PostMapperTest {
 
         List<PostResponse> posts = postMapper.findAll();
         System.out.println("전체 게시글 개수는 : " + posts.size() + "개입니다.");
+    }
+
+    @Test
+    public void findById(){
+        PostResponse posts = postMapper.findById(1L);
+        try{
+            String postJson = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(posts);
+            System.out.println(postJson);
+        }catch(JsonProcessingException e){
+            throw new RuntimeException(e);
+        }
     }
 }
