@@ -1,0 +1,14 @@
+댓글 테이블 생성
+create table tb_comment (
+      id bigint not null auto_increment comment '댓글 번호 (PK)'
+    , post_id bigint not null comment '게시글 번호 (FK)'
+    , content varchar(1000) not null comment '내용'
+    , writer varchar(20) not null comment '작성자'
+    , delete_yn tinyint(1) not null comment '삭제 여부'
+    , created_date datetime not null default CURRENT_TIMESTAMP comment '생성일시'
+    , modified_date datetime comment '최종 수정일시'
+    , primary key(id)
+) comment '댓글';
+
+제약조건 생성
+alter table tb_comment add constraint fk_post_comment foreign key(post_id) references tb_post(id);
